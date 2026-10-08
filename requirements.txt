@@ -1,0 +1,53 @@
+# ================================
+# FixMyCity AI - Requirements
+# ================================
+
+# Backend
+fastapi
+uvicorn[standard]
+pydantic
+python-dotenv
+
+# Database
+sqlalchemy
+psycopg2-binary
+
+# AI / ML
+numpy
+pandas
+scikit-learn
+
+# Computer Vision
+opencv-python
+Pillow
+ultralytics
+
+# Deep Learning
+torch
+torchvision
+
+# Image / Text Embeddings
+transformers
+sentence-transformers
+
+# Agent / LLM
+langchain
+langgraph
+
+# Vector Database
+chromadb
+
+# HTTP / API
+requests
+httpx
+
+# Geospatial
+geopy
+
+# Jupyter / Colab
+jupyter
+ipykernel
+
+# Dataset / ML utilities
+PyYAML
+roboflow
