@@ -16,11 +16,14 @@ env/
 .env
 .env.*
 !.env.example
+kaggle.json
+.kaggle/
 
 # Jupyter
 .ipynb_checkpoints/
 
 # ML datasets and generated outputs
+datasets/FixMyCity_Datasets/
 ml/data/
 ml/runs/
 ml/weights/
@@ -33,6 +36,13 @@ ml/outputs/
 *.pkl
 *.joblib
 *.zip
+*.weights
+*.tar.gz
+*.tar
+*.7z
+
+# AI Tooling artifacts
+.kilo/
 
 # Logs
 *.log
