@@ -11,7 +11,7 @@ coordination**
 Vision](https://img.shields.io/badge/Computer%20Vision-YOLOv8-8A2BE2)](https://docs.ultralytics.com/)
 [![Dataset
 Pipeline](https://img.shields.io/badge/Dataset-5%20Civic%20Classes-0A7B83)](#-computer-vision-dataset)
-[![Tests](https://img.shields.io/badge/Pipeline%20Tests-17%20passing-success)](#-testing-and-validation)
+[![Tests](https://img.shields.io/badge/Pipeline%20Tests-41%20passing-success)](#-testing-and-validation)
 [![Status](https://img.shields.io/badge/Status-Hackathon%20Prototype-orange)](#-project-status)
 
 **Report → Understand → Verify → Prioritize → Route → Track → Resolve →
@@ -574,16 +574,17 @@ each one is already integrated in the repository.
 
 ## 🧪 Testing and validation
 
-The last reported dataset-pipeline test run passed **17 tests**. Run the
+The latest full test run passed **41 tests and 5 subtests**. Run the
 tests again after making changes:
 
 ``` powershell
 .\.venv\Scripts\python -m unittest discover tests -v
 ```
 
-The existing tests cover dataset configuration, class mapping,
-bounding-box validation, annotation parsing, full-image-box policy
-behavior, and processed-dataset validation status.
+The suite covers dataset configuration and validation, image inference input handling,
+preliminary severity rules, duplicate-image candidate detection, and repair-evidence handling.
+
+See [the ML pipeline documentation](ml/README.md) for module usage, examples, and limitations.
 
 Additional recommended tests for a complete product include:
 
