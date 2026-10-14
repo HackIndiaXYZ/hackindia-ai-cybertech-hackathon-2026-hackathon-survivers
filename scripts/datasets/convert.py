@@ -189,8 +189,8 @@ def parse_yolo_txt(
         if not line:
             continue
         parts = line.split()
-        if len(parts) < 5:
-            rejected.append(f"{txt_path.name}:L{line_idx}: expected >= 5 tokens, got {len(parts)}")
+        if len(parts) != 5:
+            rejected.append(f"{txt_path.name}:L{line_idx}: expected exactly 5 tokens, got {len(parts)}: '{line}'")
             continue
 
         cls_token = parts[0]

@@ -29,6 +29,14 @@ ml/runs/
 ml/weights/
 ml/models/
 ml/outputs/
+
+# Local training runs, model checkpoints, validation predictions,
+# confusion-matrix CSVs, contact sheets, and annotation-audit diagnostics.
+runs/
+
+# Root-level Kaggle dataset-metadata provenance files (raw API responses).
+# The authoritative source registry lives in scripts/datasets/config.py.
+/meta_*.json
 *.pt
 *.pth
 *.onnx

@@ -46,6 +46,13 @@ TEST_RATIO = 0.15
 MIN_BOX_DIM = 1e-6          # a box with width/height below this is invalid
 MAX_BOX_DIM = 1.0 + 1e-6    # boxes must stay inside [0, 1]
 FULL_IMAGE_AREA_RATIO = 0.95  # >= this => treated as a full-image box
+# Policy for full-image boxes (area >= FULL_IMAGE_AREA_RATIO). A box covering
+# essentially the whole frame is an image-level label, not a localized object
+# detection. When True the builder drops such boxes and emits an empty label
+# file, turning the image into a background/negative example. This matches the
+# existing drainage class-0 (closed manhole) policy and prevents the detector
+# from learning to fire on every image. Set False to keep them as positives.
+CONVERT_FULL_IMAGE_BOXES_TO_NEGATIVES = True
 DUPLICATE_HASH_ALGO = "md5"
 NEAR_DUP_PHASH_BITS = 64
 NEAR_DUP_HAMMING_MAX = 8      # <= this hamming distance => near-duplicate group
@@ -106,8 +113,18 @@ SOURCES: Dict[str, RawSource] = {
         annotation_format="yolo",
         local_subdir="water_leakage",
         class_map={"0": 3},
-        notes="COCO-format container but labels are YOLO .txt. Single class '0' = leak. "
-              "train and val reference the SAME image files (leakage) -> merged and re-split.",
+        notes="Container ships a real COCO JSON (instances_train2014.json, 3555 images, "
+              "single category id 1 name '0'). The YOLO .txt sidecars in "
+              "'water leakage data/labels/train' are the authoritative per-image "
+              "annotations: every one of their 3555 stems matches a COCO file_name, "
+              "so the JSON is used only as provenance. The COCO image set and the "
+              "on-disk image directory disagree by 196 files: 196 H6_* variant "
+              "images exist in train/train/ but have no COCO entry and no label "
+              "file (they are out-of-registry), and 196 H3_* variant labels exist "
+              "but have no corresponding image. These 196 pairs are excluded by "
+              "the builder's stem pairing. The original train/val splits do NOT "
+              "overlap (measured intersection = 0), so they are merged and "
+              "re-split deterministically to guarantee zero cross-split leakage.",
     ),
     "drainage": RawSource(
         category="drainage",

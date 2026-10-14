@@ -21,6 +21,7 @@ from typing import Dict, List, Optional, Set, Tuple
 from PIL import Image
 
 from .config import (
+    CONVERT_FULL_IMAGE_BOXES_TO_NEGATIVES,
     DATASETS_ROOT,
     PROJECT_ROOT,
     PROCESSED_ROOT,
@@ -70,7 +71,38 @@ class DatasetBuilder:
         self.unannotated_skipped: List[Dict[str, str]] = []
         self.rejected_boxes: List[str] = []
         self.empty_label_images: List[str] = []
+        self.full_image_boxes_converted: List[Dict[str, str]] = []
         self.seen_hashes: Dict[str, str] = {}  # hash -> first image path
+
+    def _filter_full_image_boxes(
+        self,
+        boxes: List[BoundingBox],
+        image_path: Path,
+        category: str,
+    ) -> List[BoundingBox]:
+        """Drop full-image boxes and record them, per the configured policy.
+
+        A box whose area is >= FULL_IMAGE_AREA_RATIO covers essentially the
+        whole frame and is an image-level label rather than a localized object
+        detection. When CONVERT_FULL_IMAGE_BOXES_TO_NEGATIVES is enabled these
+        are removed and the image becomes a background/negative example (its
+        label file is written empty). When disabled they are kept as-is.
+        """
+        if not CONVERT_FULL_IMAGE_BOXES_TO_NEGATIVES:
+            return boxes
+
+        kept: List[BoundingBox] = []
+        for box in boxes:
+            if box.is_full_image():
+                self.full_image_boxes_converted.append({
+                    "category": category,
+                    "image": str(image_path),
+                    "class_id": box.class_id,
+                    "area": round(box.width * box.height, 6),
+                })
+            else:
+                kept.append(box)
+        return kept
 
     def collect_pothole(self) -> None:
         """Collect and convert andrewmvd/pothole-detection (VOC XML)."""
@@ -111,6 +143,7 @@ class DatasetBuilder:
                 ignore_classes=src_meta.ignore_classes,
             )
             self.rejected_boxes.extend(rejected)
+            boxes = self._filter_full_image_boxes(boxes, img_path, cat)
 
             img_hash = compute_md5(img_path)
             if img_hash in self.seen_hashes:
@@ -241,6 +274,7 @@ class DatasetBuilder:
                 ignore_classes=src_meta.ignore_classes,
             )
             self.rejected_boxes.extend(rejected)
+            boxes = self._filter_full_image_boxes(boxes, img_path, cat)
 
             img_hash = compute_md5(img_path)
             if img_hash in self.seen_hashes:
@@ -314,6 +348,7 @@ class DatasetBuilder:
                 ignore_classes=src_meta.ignore_classes,
             )
             self.rejected_boxes.extend(rejected)
+            boxes = self._filter_full_image_boxes(boxes, img_path, cat)
 
             img_hash = compute_md5(img_path)
             if img_hash in self.seen_hashes:
@@ -380,6 +415,7 @@ class DatasetBuilder:
                     ignore_classes=src_meta.ignore_classes,
                 )
                 self.rejected_boxes.extend(rejected)
+                boxes = self._filter_full_image_boxes(boxes, img_path, cat)
 
                 img_hash = compute_md5(img_path)
                 if img_hash in self.seen_hashes:
@@ -562,6 +598,9 @@ names:
             "unannotated_skipped_list": self.unannotated_skipped,
             "rejected_invalid_boxes_count": len(self.rejected_boxes),
             "rejected_invalid_boxes_sample": self.rejected_boxes[:50],
+            "full_image_boxes_converted_count": len(self.full_image_boxes_converted),
+            "full_image_boxes_converted_sample": self.full_image_boxes_converted[:50],
+            "full_image_box_policy": "convert_to_negative" if CONVERT_FULL_IMAGE_BOXES_TO_NEGATIVES else "keep_as_positive",
             "dataset_disk_size_mb": round(total_bytes / (1024 * 1024), 2),
             "status": "COMPLETED",
         }
