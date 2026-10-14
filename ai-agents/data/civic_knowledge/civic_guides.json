@@ -1,0 +1,80 @@
+
+[
+  {
+    "id": "electricity_exposed_wire",
+    "category": "electricity",
+    "title": "Exposed or fallen electrical wire",
+    "keywords": ["exposed wire", "live wire", "electrical wire", "electric shock", "sparking wire", "fallen electric pole"],
+    "department": "Local electricity distribution utility",
+    "priority": "critical",
+    "guidance": [
+      "Stay well away from the wire and any nearby objects that may be energized.",
+      "Warn other people from a safe distance; do not touch or attempt to move the wire.",
+      "Contact the local electricity emergency service or appropriate emergency authority.",
+      "Provide the exact location and safe-distance photographs if available."
+    ],
+    "evidence": ["Exact location or nearby landmark", "Photographs from a safe distance"],
+    "human_review": true
+  },
+  {
+    "id": "road_pothole",
+    "category": "roads",
+    "title": "Pothole or damaged road",
+    "keywords": ["pothole", "broken road", "damaged road", "road crack", "damaged street"],
+    "department": "Municipal corporation or road-owning authority",
+    "priority": "normal",
+    "guidance": [
+      "Record the road name and nearest landmark.",
+      "Describe the approximate size and whether the damage creates immediate danger.",
+      "Submit the complaint to the authority responsible for that road."
+    ],
+    "evidence": ["Road name or landmark", "Photograph of the damage, if safe"],
+    "human_review": false
+  },
+  {
+    "id": "waste_accumulation",
+    "category": "waste",
+    "title": "Garbage accumulation or missed collection",
+    "keywords": ["garbage", "trash", "rubbish", "waste collection", "overflowing dustbin", "litter"],
+    "department": "Municipal sanitation or solid-waste management department",
+    "priority": "normal",
+    "guidance": [
+      "Record the collection point or affected street.",
+      "Mention how long the waste has remained uncollected.",
+      "Report persistent accumulation to the responsible municipal authority."
+    ],
+    "evidence": ["Exact location", "Photograph of the waste, if appropriate"]
+    ,
+    "human_review": false
+  },
+  {
+    "id": "water_leakage",
+    "category": "water",
+    "title": "Water leakage or supply issue",
+    "keywords": ["water leakage", "pipe leak", "water supply", "no water", "dirty water"],
+    "department": "Local water supply department or utility",
+    "priority": "normal",
+    "guidance": [
+      "Record the affected street or nearby landmark.",
+      "Describe whether the issue is leakage, interruption, or water quality.",
+      "Report suspected contamination promptly to the responsible water utility."
+    ],
+    "evidence": ["Exact location", "Description of the water issue", "Photograph, if safe"],
+    "human_review": false
+  },
+  {
+    "id": "blocked_drain",
+    "category": "drainage",
+    "title": "Blocked drain or waterlogging",
+    "keywords": ["blocked drain", "drain blockage", "waterlogging", "flooded street", "drain overflow"],
+    "department": "Municipal drainage or stormwater department",
+    "priority": "normal",
+    "guidance": [
+      "Record the affected location and extent of waterlogging.",
+      "Mention whether access to homes or roads is obstructed.",
+      "Avoid entering deep or moving floodwater."
+    ],
+    "evidence": ["Location or landmark", "Photograph from a safe location"],
+    "human_review": false
+  }
+]

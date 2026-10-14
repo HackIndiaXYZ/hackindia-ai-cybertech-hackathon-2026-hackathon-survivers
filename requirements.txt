@@ -1,4 +1,4 @@
-# ================================
+﻿# ================================
 # FixMyCity AI - Requirements
 # ================================
 
@@ -31,6 +31,7 @@ transformers
 sentence-transformers
 
 # Agent / LLM
+google-genai
 langchain
 langgraph
 
