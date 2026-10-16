@@ -52,3 +52,4 @@ ipykernel
 # Dataset / ML utilities
 PyYAML
 roboflow
+python-multipart

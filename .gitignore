@@ -67,3 +67,12 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+# Local databases and backup files
+*.db
+*.sqlite
+*.sqlite3
+*.bak
+
+# Python cache files
+__pycache__/
+*.py[cod]
