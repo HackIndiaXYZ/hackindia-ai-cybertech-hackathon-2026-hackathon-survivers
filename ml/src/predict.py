@@ -1,4 +1,5 @@
-﻿from pathlib import Path
+import os
+from pathlib import Path
 import argparse
 import csv
 
@@ -7,7 +8,7 @@ from ultralytics import YOLO
 
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_WEIGHTS = ROOT / "runs/fixmycity/yolov8n_adamw_v1/weights/best.pt"
+DEFAULT_WEIGHTS = Path(os.getenv("FIXMYCITY_MODEL_PATH", str(ROOT / "ml" / "deployment_weights" / "fixmycity_yolov8n_best.pt")))
 DEFAULT_OUTPUT = ROOT / "runs/fixmycity/demo_predictions"
 
 

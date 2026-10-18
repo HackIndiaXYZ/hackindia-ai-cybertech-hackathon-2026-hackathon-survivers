@@ -1,7 +1,10 @@
 
 from typing import Literal
 
+import os
+
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from review.approval import ReviewError, review_manager
@@ -9,12 +12,28 @@ from workflow.city_workflow import run_city_workflow
 
 
 app = FastAPI(
-    title="Fix My City — AI Review API",
+    title="Fix My City â€” AI Review API",
     description=(
         "AI-powered civic complaint analysis and human review "
         "queue for local development."
     ),
     version="0.1.0",
+)
+_default_origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+_configured_origins = [
+    origin.strip().rstrip("/")
+    for origin in os.getenv("CORS_ORIGINS", "").split(",")
+    if origin.strip()
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=list(dict.fromkeys(_default_origins + _configured_origins)),
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 

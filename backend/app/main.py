@@ -1,7 +1,9 @@
-﻿
+import os
+
 from contextlib import asynccontextmanager
 from typing import Annotated
 
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import (
     Depends,
     FastAPI,
@@ -51,6 +53,28 @@ app = FastAPI(
     ),
     version="0.3.0",
     lifespan=lifespan,
+)
+_default_origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+_configured_origins = [
+    origin.strip().rstrip("/")
+    for origin in os.getenv("CORS_ORIGINS", "").split(",")
+    if origin.strip()
+]
+_frontend_origin = os.getenv("FRONTEND_ORIGIN", "").strip().rstrip("/")
+if _frontend_origin:
+    if not _frontend_origin.startswith(("http://", "https://")):
+        _frontend_origin = "https://" + _frontend_origin
+    _configured_origins.append(_frontend_origin)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=list(dict.fromkeys(_default_origins + _configured_origins)),
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 

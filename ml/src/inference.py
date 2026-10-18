@@ -1,4 +1,5 @@
-﻿from functools import lru_cache
+import os
+from functools import lru_cache
 from pathlib import Path
 
 import cv2
@@ -6,8 +7,11 @@ from ultralytics import YOLO
 
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_WEIGHTS = (
-    ROOT / "runs" / "fixmycity" / "yolov8n_adamw_v1" / "weights" / "best.pt"
+DEFAULT_WEIGHTS = Path(
+    os.getenv(
+        "FIXMYCITY_MODEL_PATH",
+        str(ROOT / "ml" / "deployment_weights" / "fixmycity_yolov8n_best.pt"),
+    )
 )
 
 

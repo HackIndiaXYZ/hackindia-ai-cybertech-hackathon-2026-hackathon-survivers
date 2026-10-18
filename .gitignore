@@ -76,3 +76,16 @@ Thumbs.db
 # Python cache files
 __pycache__/
 *.py[cod]
+
+
+# Deployment model: keep only the explicitly packaged checkpoint.
+!ml/deployment_weights/fixmycity_yolov8n_best.pt
+
+# Frontend build output and local dependencies.
+frontend/node_modules/
+frontend/.next/
+frontend/tsconfig.tsbuildinfo
+
+# AI agent runtime state (recreated at deployment).
+ai-agents/data/chroma_db/
+ai-agents/data/civic_knowledge/
