@@ -1,4 +1,4 @@
-﻿services:
+services:
   - type: web
     name: fixmycity-backend
     runtime: python
@@ -46,5 +46,6 @@
         sync: false
       - key: NEXT_PUBLIC_AI_API_URL
         sync: false
+
 
 
